@@ -1,0 +1,25 @@
+.table
+{
+    border-spacing: 0px;
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin: 5px;
+}
+.white
+{
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    margin: 0px;
+    padding: auto;
+    
+}
+
+.black
+{
+    height: 20px;
+    width: 20px;
+    background-color: black;
+    margin: 0px;
+    padding: auto;
+}
