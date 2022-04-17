@@ -9,8 +9,7 @@
 {
     height: 20px;
     width: 20px;
-    background-color: white;
-    margin: 0px;
+    background-color: rgb(156, 156, 156);
     padding: auto;
     
 }
@@ -19,7 +18,18 @@
 {
     height: 20px;
     width: 20px;
-    background-color: black;
+    background-color: rgb(253, 0, 0);
     margin: 0px;
     padding: auto;
+}
+
+td:hover:active
+{
+    background-color: rgb(95, 95, 95);
+}
+
+.img1
+{
+    height:90%;
+    width: auto;
 }
