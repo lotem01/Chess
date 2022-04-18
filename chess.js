@@ -9,14 +9,19 @@ function addImage(cell, player, name) {
     cell.appendChild(image);
     image.className='img1';
   }
-  
+
 
 function onCellClick (event){
+      {
         if (selectedCell!== undefined)
             selectedCell.classList.remove('selected');
-        console.log(event);
+        // console.log(event);
         selectedCell= event.currentTarget;
         selectedCell.classList.add('selected');
+      }
+      // if (Piece.type==="pawn") {
+        table.rows[i+1].cells[y].classList.add('selected');
+      // }
 }
 
 class Piece {
@@ -26,6 +31,12 @@ class Piece {
       this.type = type;
       this.player = player;
     }
+    whereP ()
+    {
+      let l=[];
+      l= [this.row, this.col];
+      return l;
+    } 
   }
 
   function getInitialBoard() {
@@ -53,13 +64,14 @@ class Piece {
     return result;
   }
 
-  function whereP (player, type)
-  {
-    let l=0;
-    for (Piece in pieces)
-        if ((Piece.player===player)&& (Piece.type===type))
-            l= Piece.row.toString()+", " +Piece.col.toString();
-  }
+function pawnMove (player)
+{
+  let arr=[];
+  if (player===WHITE_PLAYER)
+    arr= [1,0];
+}
+
+
 
 function chessBoard (){
     let table = document.createElement("table");
@@ -81,17 +93,18 @@ function chessBoard (){
                     td.className= 'black';       
                  
             
-            td.addEventListener('click', onCellClick);  
+            td.addEventListener('click', onCellClick);
+            
         }
     }
     pieces = getInitialBoard();
     for (let piece of pieces) {
         addImage(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
       }
+      
+      
 }
     
 window.addEventListener('load', chessBoard);
-whereP (WHITE_PLAYER, bishop);
-
 
 
