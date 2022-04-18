@@ -1,14 +1,67 @@
 let selectedCell;
+let pieces = [];
+const WHITE_PLAYER = 'white';
+const DARK_PLAYER = 'dark';
+
+function addImage(cell, player, name) {
+    const image = document.createElement('img');
+    image.src = 'images/' + player + '/' + name + '.png';
+    cell.appendChild(image);
+    image.className='img1';
+  }
+  
+
 function onCellClick (event){
         if (selectedCell!== undefined)
-            selectedCell.classList.remove('selected')
+            selectedCell.classList.remove('selected');
         console.log(event);
         selectedCell= event.currentTarget;
-        selectedCell.classList.add('selected')
+        selectedCell.classList.add('selected');
 }
 
-window.addEventListener('load', () => {
-    console.log('HTML page is loaded');
+class Piece {
+    constructor(row, col, type, player) {
+      this.row = row;
+      this.col = col;
+      this.type = type;
+      this.player = player;
+    }
+  }
+
+  function getInitialBoard() {
+    let result = [];
+    result.push(new Piece(0, 0, "rook", WHITE_PLAYER));
+    result.push(new Piece(0, 1, "knight", WHITE_PLAYER));
+    result.push(new Piece(0, 2, "bishop", WHITE_PLAYER));
+    result.push(new Piece(0, 3, "queen", WHITE_PLAYER));
+    result.push(new Piece(0, 4, "king", WHITE_PLAYER));
+    result.push(new Piece(0, 5, "bishop", WHITE_PLAYER));
+    result.push(new Piece(0, 6, "knight", WHITE_PLAYER));
+    result.push(new Piece(0, 7, "rook", WHITE_PLAYER));
+    result.push(new Piece(7, 0, "rook", DARK_PLAYER));
+    result.push(new Piece(7, 1, "knight", DARK_PLAYER));
+    result.push(new Piece(7, 2, "bishop", DARK_PLAYER));
+    result.push(new Piece(7, 3, "queen", DARK_PLAYER));
+    result.push(new Piece(7, 4, "king", DARK_PLAYER));
+    result.push(new Piece(7, 5, "bishop", DARK_PLAYER));
+    result.push(new Piece(7, 6, "knight", DARK_PLAYER));
+    result.push(new Piece(7, 7, "rook", DARK_PLAYER));
+    for (let i=0; i<=7; i++){
+        result.push(new Piece(1, i, "pawn", WHITE_PLAYER));
+        result.push(new Piece(6, i, "pawn", DARK_PLAYER));
+    }
+    return result;
+  }
+
+  function whereP (player, type)
+  {
+    let l=0;
+    for (Piece in pieces)
+        if ((Piece.player===player)&& (Piece.type===type))
+            l= Piece.row.toString()+", " +Piece.col.toString();
+  }
+
+function chessBoard (){
     let table = document.createElement("table");
     document.body.appendChild(table);
     table.className= 'table';
@@ -27,126 +80,18 @@ window.addEventListener('load', () => {
                 else 
                     td.className= 'black';       
                  
-            if (i==2)
-            {
-            let bPawn= new Image();
-            bPawn.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Chess_pdt45.svg/800px-Chess_pdt45.svg.png';
-            bPawn.className='img1'
-            td.appendChild(bPawn);
-            }
-            if (i==7)
-            {
-            let wPawn= new Image();
-            wPawn.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Chess_plt45.svg/800px-Chess_plt45.svg.png';
-            wPawn.className='img1';
-            td.appendChild(wPawn);
-            }
-            if (i==1)
-            {
-                if ((y==1)||(y==8))
-                {
-                let bRook= new Image();
-                bRook.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Chess_rdt45.svg/800px-Chess_rdt45.svg.png';
-                bRook.className='img1'
-                td.appendChild(bRook);
-                }
-
-                if ((y==2)||(y==7))
-                {
-                let bKnight= new Image();
-                bKnight.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/800px-Chess_ndt45.svg.png';
-                bKnight.className='img1'
-                td.appendChild(bKnight);
-                }
-
-                if ((y==3)||(y==6))
-                {
-                let bBishop= new Image();
-                bBishop.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Chess_bdt45.svg/800px-Chess_bdt45.svg.png';
-                bBishop.className='img1'
-                td.appendChild(bBishop);
-                }
-
-                if (y==4)
-                {
-                let bQueen= new Image();
-                bQueen.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Chess_qdt45.svg/800px-Chess_qdt45.svg.png';
-                bQueen.className='img1'
-                td.appendChild(bQueen);
-                }
-
-                if (y==5)
-                {
-                let bKing= new Image();
-                bKing.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/800px-Chess_kdt45.svg.png';
-                bKing.className='img1'
-                td.appendChild(bKing);
-                }
-            }
-            if (i==8)
-            {
-                if ((y==1)||(y==8))
-                {
-                let wRook= new Image();
-                wRook.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Chess_rlt45.svg/800px-Chess_rlt45.svg.png';
-                wRook.className='img1'
-                td.appendChild(wRook);
-                }
-
-                if ((y==2)||(y==7))
-                {
-                let wKnight= new Image();
-                wKnight.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/800px-Chess_nlt45.svg.png';
-                wKnight.className='img1'
-                td.appendChild(wKnight);
-                }
-
-                if ((y==3)||(y==6))
-                {
-                let wBishop= new Image();
-                wBishop.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Chess_blt45.svg/800px-Chess_blt45.svg.png';
-                wBishop.className='img1'
-                td.appendChild(wBishop);
-                }
-
-                if (y==4)
-                {
-                let wQueen= new Image();
-                wQueen.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Chess_qlt45.svg/800px-Chess_qlt45.svg.png';
-                wQueen.className='img1'
-                td.appendChild(wQueen);
-                }
-
-                if (y==5)
-                {
-                let wKing= new Image();
-                wKing.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/800px-Chess_klt45.svg.png';
-                wKing.className='img1'
-                td.appendChild(wKing);
-                }
-            }
-            td.addEventListener('click', onCellClick);
+            
+            td.addEventListener('click', onCellClick);  
         }
     }
+    pieces = getInitialBoard();
+    for (let piece of pieces) {
+        addImage(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
+      }
+}
     
-    // Element.addEventListener('click', function(){
-    //     button.parentNode.removeClass('selected');
-    //     this.parentNode.addClass('selected');
-    // });
-    
-    
-});
+window.addEventListener('load', chessBoard);
+whereP (WHITE_PLAYER, bishop);
 
 
-// let pCell= table.rows[-1].cell[-1];
 
-// function select (cell1, pCell)
-// {
-//     if (pCell=== table.rows[-1].cell[-1])
-//         pCell=cell1;
-//     let pStyle= cell1.className;
-//     cell1.className= 'selected';
-    
-// }
-
-// td.addEventListener("click", select);
