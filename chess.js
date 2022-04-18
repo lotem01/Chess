@@ -1,3 +1,12 @@
+let selectedCell;
+function onCellClick (event){
+        if (selectedCell!== undefined)
+            selectedCell.classList.remove('selected')
+        console.log(event);
+        selectedCell= event.currentTarget;
+        selectedCell.classList.add('selected')
+}
+
 window.addEventListener('load', () => {
     console.log('HTML page is loaded');
     let table = document.createElement("table");
@@ -29,7 +38,7 @@ window.addEventListener('load', () => {
             {
             let wPawn= new Image();
             wPawn.src= 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Chess_plt45.svg/800px-Chess_plt45.svg.png';
-            wPawn.className='img1'
+            wPawn.className='img1';
             td.appendChild(wPawn);
             }
             if (i==1)
@@ -116,10 +125,28 @@ window.addEventListener('load', () => {
                 td.appendChild(wKing);
                 }
             }
+            td.addEventListener('click', onCellClick);
         }
     }
+    
+    // Element.addEventListener('click', function(){
+    //     button.parentNode.removeClass('selected');
+    //     this.parentNode.addClass('selected');
+    // });
     
     
 });
 
 
+// let pCell= table.rows[-1].cell[-1];
+
+// function select (cell1, pCell)
+// {
+//     if (pCell=== table.rows[-1].cell[-1])
+//         pCell=cell1;
+//     let pStyle= cell1.className;
+//     cell1.className= 'selected';
+    
+// }
+
+// td.addEventListener("click", select);
