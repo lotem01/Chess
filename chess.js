@@ -1,9 +1,11 @@
-let selectedCell;
-let pieces = [];
-const WHITE_PLAYER = 'white';
-const DARK_PLAYER = 'dark';
+  let selectedCell;
+  let pieces = [];
+  const WHITE_PLAYER = 'white';
+  const DARK_PLAYER = 'dark';
+  let table;
+  
 
-function addImage(cell, player, name) {
+  function addImage(cell, player, name) {
     const image = document.createElement('img');
     image.src = 'images/' + player + '/' + name + '.png';
     cell.appendChild(image);
@@ -11,33 +13,107 @@ function addImage(cell, player, name) {
   }
 
 
-function onCellClick (event){
-      {
-        if (selectedCell!== undefined)
-            selectedCell.classList.remove('selected');
-        // console.log(event);
-        selectedCell= event.currentTarget;
-        selectedCell.classList.add('selected');
+  function onCellClick(event, row, col) {
+    // console.log(row);
+    // console.log(col);
+    //clean the table from pos move
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        table.rows[i].cells[j].classList.remove('possible-move');
       }
-      // if (Piece.type==="pawn") {
-        table.rows[i+1].cells[y].classList.add('selected');
-      // }
-}
+    }
+    
+  //add pos move to the cells
+    for (let Piece of pieces) {
+      if (Piece.row === row && Piece.col === col) {
+        // console.log(Piece);
+        let possibleMoves = Piece.getPossibleMoves();
+        for (let possibleMove of possibleMoves)
+        table.rows[possibleMove[0]].cells[possibleMove[1]].classList.add('possible-move');
+      }
+    }
+  // selected cell
+    if (selectedCell !== undefined) {
+      selectedCell.classList.remove('selected');
+    }
+    selectedCell = event.currentTarget;
+    selectedCell.classList.add('selected');
+  }
 
-class Piece {
+  class Piece {
     constructor(row, col, type, player) {
       this.row = row;
       this.col = col;
       this.type = type;
       this.player = player;
-    }
-    whereP ()
-    {
+      }
+      whereP ()
+      {
       let l=[];
       l= [this.row, this.col];
       return l;
-    } 
-  }
+      }
+      getPossibleMoves() {
+      let relativeMoves;
+      if (this.type === 'pawn') {
+        relativeMoves = this.getPawnRelativeMoves();
+      } else if (this.type === 'rook') {
+        relativeMoves = this.getRookRelativeMoves();
+      } else if (this.type === 'knight') {
+        // TODO: Get moves
+      } else if (this.type === 'bishop') {
+        // TODO: Get moves
+      } else if (this.type === 'king') {
+        // TODO: Get moves
+      } else if (this.type === 'queen') {
+        // TODO: Get moves
+      } else {
+        console.log("Unknown type", type)
+      }
+      console.log('relativeMoves', relativeMoves);
+  
+      let absoluteMoves = [];
+      for (let relativeMove of relativeMoves) {
+        const absoluteRow = this.row + relativeMove[0];
+        const absoluteCol = this.col + relativeMove[1];
+        absoluteMoves.push([absoluteRow, absoluteCol]);
+      }
+      console.log('absoluteMoves', absoluteMoves);
+  
+      let filteredMoves = [];
+      for (let absoluteMove of absoluteMoves) {
+        const absoluteRow = absoluteMove[0];
+        const absoluteCol = absoluteMove[1];
+        if (absoluteRow >= 0 && absoluteRow <= 7 && absoluteCol >= 0 && absoluteCol <= 7) {
+          filteredMoves.push(absoluteMove);
+        }
+        console.log('filteredMoves', filteredMoves);
+      }
+      return filteredMoves;
+    }
+  
+    getPawnRelativeMoves() {
+      // if (this.player===WHITE_PLAYER) {
+        return [1, 0];
+      // }else if (this.player===DARK_PLAYER ) {
+      //   return [-1, 0];
+      // }
+      // else 
+      //   return (undefined, console.log ("unknown player: "+ this.player))
+    }
+  
+    getRookRelativeMoves() {
+      let result = [];
+      for (let i = 1; i < 8; i++) {
+        result.push([i, 0]);
+        result.push([-i, 0]);
+        result.push([0, i]);
+        result.push([0, -i]);
+      }
+      return result;
+    }
+  } 
+  
 
   function getInitialBoard() {
     let result = [];
@@ -64,47 +140,53 @@ class Piece {
     return result;
   }
 
-function pawnMove (player)
-{
-  let arr=[];
-  if (player===WHITE_PLAYER)
-    arr= [1,0];
-}
 
 
+  // class BoardData {
+  //   constructor(pieces) {
+  //     this.pieces = pieces;
+  //   }
+  
+  //   // Returns piece in row, col, or undefined if not exists.
+  //   getPiece(row, col) {
+  
+  //   }
+  // }
 
-function chessBoard (){
-    let table = document.createElement("table");
+
+  function chessBoard (){
+    table = document.createElement("table");
     document.body.appendChild(table);
     table.className= 'table';
     let tb = document.createElement("tbody");
     table.appendChild(tb);
-    for (let i=1; i<=8; i++)
+    for (let i=0; i<8; i++)
     {
         let tr = document.createElement("tr");
         tb.appendChild(tr);
-        for (let y=1; y<=8; y++)
+        for (let j=0; j<8; j++)
         {
             let td = document.createElement("td");
             tr.appendChild(td);
-            if ((y%2==1&& i%2==1) || (y%2==0&& i%2==0) ) 
+            if ((j%2==1&& i%2==1) || (j%2==0&& i%2==0) ) 
                 td.className= 'white';
                 else 
                     td.className= 'black';       
                  
             
-            td.addEventListener('click', onCellClick);
+          td.addEventListener('click', (event) => onCellClick(event, i, j));
             
         }
     }
     pieces = getInitialBoard();
+    pieces[0].getPossibleMoves();
     for (let piece of pieces) {
         addImage(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
       }
       
       
-}
+  }
     
-window.addEventListener('load', chessBoard);
+  window.addEventListener('load', chessBoard);
 
 

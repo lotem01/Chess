@@ -38,3 +38,9 @@
     height:90%;
     width: auto;
 }
+
+
+.possible-move
+{
+    background-color: blue;
+}
