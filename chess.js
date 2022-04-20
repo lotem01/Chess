@@ -64,13 +64,13 @@
       } else if (this.type === 'bishop') {
         relativeMoves = this.getBishopRelativeMoves();
       } else if (this.type === 'king') {
-        // TODO: Get moves
+        relativeMoves = this.getKingRelativeMoves();
       } else if (this.type === 'queen') {
-        // TODO: Get moves
+        relativeMoves = this.getQueenRelativeMoves();
       } else {
         console.log("Unknown type", type)
       }
-      console.log('relativeMoves', relativeMoves);
+      // console.log('relativeMoves', relativeMoves);
   
       let absoluteMoves = [];
       for (let relativeMove of relativeMoves) {
@@ -78,7 +78,7 @@
         const absoluteCol = this.col + relativeMove[1];
         absoluteMoves.push([absoluteRow, absoluteCol]);
       }
-      console.log('absoluteMoves', absoluteMoves);
+      // console.log('absoluteMoves', absoluteMoves);
   
       let filteredMoves = [];
       for (let absoluteMove of absoluteMoves) {
@@ -87,7 +87,7 @@
         if (absoluteRow >= 0 && absoluteRow <= 7 && absoluteCol >= 0 && absoluteCol <= 7) {
           filteredMoves.push(absoluteMove);
         }
-        console.log('filteredMoves', filteredMoves);
+        // console.log('filteredMoves', filteredMoves);
       }
       return filteredMoves;
     }
@@ -138,6 +138,32 @@
           result.push([-i, i]);
           result.push([i, -i]);
           result.push([-i, -i]);
+        }
+      return result;
+    }
+
+    getKingRelativeMoves() {
+      let result = [];
+        for (let i=-1; i<2; i++)
+          for (let j=-1; j<2; j++)
+            if (!(i===0 && j===0))
+             result.push([i, j]);
+      return result;
+    }
+
+    getQueenRelativeMoves() {
+      let result = [];
+      for (let i=1; i<8; i++){
+        result.push([i, i]);
+        result.push([-i, i]);
+        result.push([i, -i]);
+        result.push([-i, -i]);
+      }
+      for (let j = 1; j < 8; j++) {
+        result.push([j, 0]);
+        result.push([-j, 0]);
+        result.push([0, j]);
+        result.push([0, -j]);
         }
       return result;
     }
