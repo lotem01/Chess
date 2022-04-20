@@ -248,11 +248,7 @@ function chessBoard() {
   for (let piece of boardData.pieces) {
     addImage(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
   }
-  let config = {
-    draggable: true,
-    dropOffBoard: 'snapback',
-    position: 'start'
-  }
+  
   
 
 }
