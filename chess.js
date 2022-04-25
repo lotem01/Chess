@@ -1,4 +1,3 @@
-let selectedCell;
 //some global variables
 let boardData;
 const WHITE_PLAYER = 'white';
@@ -354,7 +353,7 @@ class BoardData {
 
   removePiece(row, col) {
     for (let i = 0; i < this.pieces.length; i++) {
-      const piece = this.pieces[i];
+      let piece = this.pieces[i];
       if (piece.row === row && piece.col === col) {
         // Remove piece at index i
         this.pieces.splice(i, 1);
@@ -385,6 +384,7 @@ function chessBoard(boardData) {
     table.remove();
   }
   table = document.createElement("table");
+  table.id = CHESS_BOARD_ID;
   document.body.appendChild(table);
   table.className = 'table';
   let tb = document.createElement("tbody");
