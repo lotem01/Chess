@@ -16,10 +16,10 @@ class Piece {
 
   // check the possible move of piece by his type
   getPossibleMoves(boardData) {
-    if ((this.player !== boardData.currentTurn) || (boardData.win !== undefined)){
+    if ((this.player !== boardData.currentTurn) || (boardData.win !== undefined)) {
       return [];
     }
-    
+
     let moves;
     if (this.type === 'pawn') {
       moves = this.getPawnRelativeMoves(boardData);
@@ -63,6 +63,8 @@ class Piece {
       if (boardData.getPiece(this.row + 1, this.col - 1) !== undefined)
         if (boardData.getPiece(this.row + 1, this.col - 1).player === DARK_PLAYER)
           result.push([this.row + 1, this.col - 1]);
+      if (this.row === 1)
+        result.push([this.row + 2, this.col]);
     }
 
     else {
@@ -74,6 +76,8 @@ class Piece {
       if (boardData.getPiece(this.row - 1, this.col - 1) !== undefined)
         if (boardData.getPiece(this.row - 1, this.col - 1).player === WHITE_PLAYER)
           result.push([this.row - 1, this.col - 1]);
+      if (this.row === 6)
+        result.push([this.row - 2, this.col]);
     }
     return result;
   }

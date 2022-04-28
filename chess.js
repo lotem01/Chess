@@ -78,7 +78,6 @@ function onCellClick(event, row, col) {
 function tryMove(piece, row, col) {
 
   const possibleMoves = piece.getPossibleMoves(boardData);
-  console.log(possibleMoves);
   // possibleMoves looks like this: [[1,2], [3,2]]
   for (const possibleMove of possibleMoves) {
     // possibleMove looks like this: [1,2]
