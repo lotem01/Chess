@@ -118,8 +118,8 @@ function getInitialBoard() {
   result.push(new Piece(7, 6, "knight", DARK_PLAYER));
   result.push(new Piece(7, 7, "rook", DARK_PLAYER));
   for (let i = 0; i <= 7; i++) {
-    // result.push(new Piece(1, i, "pawn", WHITE_PLAYER));
-    // result.push(new Piece(6, i, "pawn", DARK_PLAYER));
+    result.push(new Piece(1, i, "pawn", WHITE_PLAYER));
+    result.push(new Piece(6, i, "pawn", DARK_PLAYER));
   }
   return result;
 }
