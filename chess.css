@@ -4,6 +4,7 @@
     border: 2px solid black;
     border-collapse: collapse;
     margin: 5px;
+    position: relative;
 }
 .white
 {
@@ -44,3 +45,12 @@
     background-color: blue;
 }
 
+h1{
+
+    text-align: center;
+}
+
+.popMessage{
+    position: absolute;
+    margin: 25%;
+}

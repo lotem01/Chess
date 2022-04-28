@@ -5,7 +5,17 @@ const DARK_PLAYER = 'dark';
 let table;
 const CHESS_BOARD_ID = 'chess-board';
 let selectedPiece;
-let currentTurn = DARK_PLAYER;
+let win= false;
+
+function popUp (){
+  let pop = document.createElement("p");
+  pop.id = winMessage;
+  const node = document.createTextNode("You Win!");
+  pop.appendChild(node);
+  table.appendChild(p);
+  pop.className = 'popMessage';
+}
+
 
 // check if x is in the array (boolean)
 function isExist(x, arr) {
@@ -54,10 +64,12 @@ function onCellClick(event, row, col) {
 
   if (selectedPiece === undefined) {
     showMovesForPiece(row, col);
-    currentTurn = selectedPiece.player;
   } else
-    // if (selectedPiece.player === turn())
      {
+       if (win)
+        popUp();
+       else{
+         
       if (tryMove(selectedPiece, row, col)) {
         selectedPiece = undefined;
         // Recreate whole board - this is not efficient, but doesn't affect user experience
@@ -65,32 +77,30 @@ function onCellClick(event, row, col) {
       } else {
         showMovesForPiece(row, col);
       }
-    }
+    }}
 }
 
 // Tries to actually make a move. Returns true if successful.
 function tryMove(piece, row, col) {
+  
   const possibleMoves = piece.getPossibleMoves(boardData);
+  console.log (possibleMoves);
   // possibleMoves looks like this: [[1,2], [3,2]]
   for (const possibleMove of possibleMoves) {
     // possibleMove looks like this: [1,2]
+    
     if (possibleMove[0] === row && possibleMove[1] === col) {
       // There is a legal move
+      if (boardData.getPiece(row,col)=== "king")
+        win= true;
       boardData.removePiece(row, col);
       piece.row = row;
       piece.col = col;
+      boardData.opposite();
       return true;
     }
   }
   return false;
-}
-
-function turn() {
-  if (currentTurn === WHITE_PLAYER)
-    currentTurn = DARK_PLAYER;
-  else
-    currentTurn = WHITE_PLAYER;
-  return currentTurn;
 }
 
 
@@ -119,9 +129,6 @@ function getInitialBoard() {
   }
   return result;
 }
-
-
-
 
 function initGame() {
   // Create list of pieces (32 total)
