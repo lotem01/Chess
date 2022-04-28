@@ -3,6 +3,7 @@ class BoardData {
   constructor(pieces) {
     this.pieces = pieces;
     this.currentTurn = DARK_PLAYER;
+    this.win = undefined;
   }
 
   // Returns piece in row, col, or undefined if not exists
@@ -19,6 +20,9 @@ class BoardData {
     for (let i = 0; i < this.pieces.length; i++) {
       let piece = this.pieces[i];
       if (piece.row === row && piece.col === col) {
+        if (piece.type === "king") {
+          this.win = this.currentTurn;
+        }
         // Remove piece at index i
         this.pieces.splice(i, 1);
       }

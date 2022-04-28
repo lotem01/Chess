@@ -16,8 +16,7 @@ class Piece {
 
   // check the possible move of piece by his type
   getPossibleMoves(boardData) {
-    if (this.player !== boardData.currentTurn){
-      console.log(this.player, boardData.currentTurn)
+    if ((this.player !== boardData.currentTurn) || (boardData.win !== undefined)){
       return [];
     }
     

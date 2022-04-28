@@ -5,14 +5,12 @@ const DARK_PLAYER = 'dark';
 let table;
 const CHESS_BOARD_ID = 'chess-board';
 let selectedPiece;
-let win= false;
 
-function popUp (){
+function popUp() {
   let pop = document.createElement("p");
-  pop.id = winMessage;
-  const node = document.createTextNode("You Win!");
+  const node = document.createTextNode( boardData.currentTurn.charAt(0).toUpperCase() + boardData.currentTurn.slice(1)+ " Player Win!");
   pop.appendChild(node);
-  table.appendChild(p);
+  table.appendChild(pop);
   pop.className = 'popMessage';
 }
 
@@ -29,6 +27,7 @@ function isExist(x, arr) {
 function addImage(cell, player, name) {
   const image = document.createElement('img');
   image.src = 'images/' + player + '/' + name + '.png';
+  image.draggable = false;
   cell.appendChild(image);
   image.className = 'img1';
 }
@@ -64,35 +63,30 @@ function onCellClick(event, row, col) {
 
   if (selectedPiece === undefined) {
     showMovesForPiece(row, col);
-  } else
-     {
-       if (win)
-        popUp();
-       else{
-         
-      if (tryMove(selectedPiece, row, col)) {
-        selectedPiece = undefined;
-        // Recreate whole board - this is not efficient, but doesn't affect user experience
-        chessBoard(boardData);
-      } else {
-        showMovesForPiece(row, col);
-      }
-    }}
+  } else {
+    if (tryMove(selectedPiece, row, col)) {
+      selectedPiece = undefined;
+      // Recreate whole board - this is not efficient, but doesn't affect user experience
+      chessBoard(boardData);
+    } else {
+      showMovesForPiece(row, col);
+    }
+  }
 }
 
 // Tries to actually make a move. Returns true if successful.
 function tryMove(piece, row, col) {
-  
+
   const possibleMoves = piece.getPossibleMoves(boardData);
-  console.log (possibleMoves);
+  console.log(possibleMoves);
   // possibleMoves looks like this: [[1,2], [3,2]]
   for (const possibleMove of possibleMoves) {
     // possibleMove looks like this: [1,2]
-    
+
     if (possibleMove[0] === row && possibleMove[1] === col) {
       // There is a legal move
-      if (boardData.getPiece(row,col)=== "king")
-        win= true;
+      if (boardData.getPiece(row, col) === "king")
+        win = true;
       boardData.removePiece(row, col);
       piece.row = row;
       piece.col = col;
@@ -124,8 +118,8 @@ function getInitialBoard() {
   result.push(new Piece(7, 6, "knight", DARK_PLAYER));
   result.push(new Piece(7, 7, "rook", DARK_PLAYER));
   for (let i = 0; i <= 7; i++) {
-    result.push(new Piece(1, i, "pawn", WHITE_PLAYER));
-    result.push(new Piece(6, i, "pawn", DARK_PLAYER));
+    // result.push(new Piece(1, i, "pawn", WHITE_PLAYER));
+    // result.push(new Piece(6, i, "pawn", DARK_PLAYER));
   }
   return result;
 }
@@ -170,7 +164,8 @@ function chessBoard(boardData) {
     addImage(table.rows[piece.row].cells[piece.col], piece.player, piece.type);
   }
 
-
+  if (boardData.win !== undefined)
+    popUp();
 
 }
 
