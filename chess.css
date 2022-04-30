@@ -4,6 +4,7 @@
     border-collapse: collapse;
     margin: 5px;
     position: relative;
+    cursor: pointer;
 }
 
 .white {
@@ -22,7 +23,7 @@
 }
 
 .selected {
-    background-color: rgb(9, 164, 9);
+    background-color: blue;
     height: 20px;
     width: 20px;
     margin: 0px;
@@ -31,18 +32,20 @@
 
 
 .img1 {
-    height: 90%;
+    height: 80%;
     width: auto;
+    margin-left: 1px;
 }
 
 
 .possible-move {
-    background-color: blue;
+    background-color: rgb(0, 85, 255);
 }
 
 h1 {
 
     text-align: center;
+    font-size: 25px;
 }
 
 .popMessage {
@@ -55,3 +58,42 @@ h1 {
     border-radius: 10px;
     width: max-content;
 }
+
+#restart_button {
+    margin-left: 65%;
+    margin-top: 20%;
+    position: absolute;
+    font-size: 4px;
+    font-family: monospace;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.5s;
+    padding: 7px;
+    width: 80px;
+}
+
+#restart_button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  #restart_button span:after {
+    content: '\1F5D8';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  #restart_button:hover span {
+    padding-right: 25px;
+  }
+  
+  #restart_button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }

@@ -166,6 +166,20 @@ function chessBoard(boardData) {
   if (boardData.win !== undefined)
     popUp();
 
+  // for (let piece of boardData.pieces){
+  //   const possibleMoves=piece.getPossibleMoves(boardData)
+  //   for (let possibleMove of possibleMoves){
+  //     let row= possibleMove[0];
+  //     let col= possibleMove[1];
+  //     let piece1= boardData.getPiece(row, col);
+  //     if (piece1.type=== "king")
+  //       console.log ("Check");
+  //   }
+  // }
+
+  let btn= document.getElementById("restart_button");
+  btn.addEventListener('click',initGame);
+
 }
 
 // the starting line
